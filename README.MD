@@ -1,53 +1,83 @@
-# End-to-End Telco Customer Churn Machine Learning Pipeline
+# Telco Customer Churn Prediction
 
-A production-ready machine learning project predicting customer churn for telecommunications providers. This repository covers the complete data science lifecycle from exploratory data analysis and advanced feature engineering to comparative model evaluation, model interpretation, and real-time API deployment using FastAPI.
+This project predicts whether a telecom customer is likely to churn using historical customer behavior, service usage, and billing data.
 
----
+The workflow includes data cleaning, EDA, feature engineering, class balancing, model comparison, threshold tuning, and deployment via a FastAPI prediction endpoint.
 
-## Project Overview
-Customer churn is a critical operational challenge in the telecommunications sector. Retaining existing customers is significantly more cost-effective than acquiring new ones. This project builds a robust classification system to identify high-risk customers, allowing retention teams to intervene proactively with targeted incentives.
+## Project objective
+Customer churn is a major cost driver in telecom businesses. This project helps identify high-risk customers so the retention team can act early with offers, upgrades, or support interventions.
 
----
+## What is included
+- Data preprocessing and cleaning
+- Duplicate and leakage checks
+- Feature engineering for customer risk patterns
+- Train-test split with class imbalance handling
+- Model benchmarking using Logistic Regression, Decision Tree, Random Forest, and XGBoost
+- Recall-focused threshold tuning
+- Model interpretation using feature importance
+- Saved production pipeline via joblib
+- FastAPI app for real-time prediction
 
-## Key Features & Methodology
-1. **Data Cleaning & Leakage Prevention:** Addressed hidden missing values in `TotalCharges`, removed duplicate entries, and strictly eliminated unique identifiers (`customerID`) to prevent data leakage.
-2. **Advanced Feature Engineering:** Engineered high-value features inspired by competitive Kaggle solutions:
-   - `AvgChargesPerTenure`: Financial burden relative to customer lifespan.
-   - `TotalServices`: Aggregates active value-added subscriptions.
-   - `ChargesPerService`: Cost-efficiency ratio per active service.
-   - `TenureGroup`: Cohort risk bins (0–1 year, 1–2 years, etc.).
-   - `Contract_Payment`: High-risk behavioral interaction combining contract type and payment method.
-3. **Imbalance-Handling Benchmarking:** Compared two distinct strategies side-by-side:
-   - **SMOTE (Synthetic Minority Over-sampling Technique)** inside leakage-free `imblearn` pipelines.
-   - **Native Class Weighting (`scale_pos_weight`)** in XGBoost.
-4. **Probability Threshold Tuning:** Optimized decision thresholds using Precision-Recall curves to maximize the F1-score for the minority churn class.
-5. **Production Deployment:** Serialized optimal model pipelines using `joblib` and served real-time predictions via a **FastAPI** backend with automated Pydantic schema validation.
+## Tech stack
+- Python
+- Pandas, NumPy
+- Matplotlib, Seaborn
+- Scikit-learn
+- XGBoost
+- imbalanced-learn
+- FastAPI
+- Pydantic
+- Joblib
 
----
-
-## Tech Stack
-* **Language:** Python 3.11
-* **Data Manipulation & Analysis:** Pandas, NumPy
-* **Visualization:** Matplotlib, Seaborn
-* **Machine Learning:** Scikit-learn (v1.4+), XGBoost (v2.0.3), Imbalanced-learn (v0.12.0)
-* **Model Serialization:** Joblib
-* **API & Backend:** FastAPI, Uvicorn, Pydantic
-
----
-
-## Repository Structure
+## Repository structure
 ```text
-customer_churn_project/
-│
+Teleco_Customer_Churn/
+├── app.py                     # FastAPI prediction API
+├── requirements.txt          # Project dependencies
+├── sample_request.json        # Example JSON payload for API testing
+├── README.MD                 # Project documentation
 ├── data/
-│   └── WA_Fn-UseC_-Telco-Customer-Churn.csv  # Raw dataset
-│
-├── notebook/
-│   └── churn_analysis.ipynb                  # Jupyter notebook (Phases 1-7)
-│
+│   └── TelcoCustomerChurn.csv
 ├── model/
-│   └── churn_model.pkl                       # Serialized production model pipeline
-│
-├── app.py                                    # FastAPI application script
-├── requirements.txt                          # Project dependency versions
-└── README.md                                 # Project documentation
+│   └── churn_model.pkl       # Trained churn model pipeline
+├── notebook/
+│   └── Customer_Churn_Analysis.ipynb
+├── .gitignore
+└── venv/                     # local virtual environment (ignored in Git)
+```
+
+## How to run the notebook
+Open the notebook in VS Code or Jupyter:
+
+```bash
+notebook/Customer_Churn_Analysis.ipynb
+```
+
+The notebook has path checks so it can run from either the project root or the notebook folder.
+
+## How to run the API
+From the project root:
+
+```bash
+uvicorn app:app --host 0.0.0.0 --port 8000
+```
+
+Then test it with:
+
+```bash
+curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d @sample_request.json
+```
+
+## Model output
+The final model is saved to:
+
+```text
+model/churn_model.pkl
+```
+
+## Business insight
+The project is designed around business risk mitigation, where missing a churner is more expensive than flagging a loyal customer. Because of this, recall is prioritized in the model evaluation and threshold tuning stage.
+
+## Notes
+- The assignment PDF is intentionally excluded from Git tracking in [.gitignore](.gitignore).
+- The notebook and app have been updated to use stable, project-root-safe file handling for the dataset and model files.
