@@ -3,6 +3,10 @@ venv/
 env/
 ENV/
 
+# Assignment / local PDF files
+Data Science Assignment.pdf
+*.pdf
+
 # Python cache and compiled files
 __pycache__/
 *.py[cod]
