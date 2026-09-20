@@ -78,6 +78,50 @@ model/churn_model.pkl
 ## Business insight
 The project is designed around business risk mitigation, where missing a churner is more expensive than flagging a loyal customer. Because of this, recall is prioritized in the model evaluation and threshold tuning stage.
 
+## Notebook workflow by phase
+This project follows the same seven-phase workflow as the notebook:
+
+1. Phase 1: Data understanding and preparation
+   - Inspect the dataset, data types, shape, and missing values.
+   - Clean the dataset and prepare it for modeling.
+2. Phase 2: Exploratory data analysis
+   - Analyze churn patterns by contract type, payment method, tenure, and service usage.
+3. Phase 3: Feature engineering and preprocessing pipeline
+   - Create new customer behavior features and transform data for modeling.
+4. Phase 4: Model development and tuning
+   - Train multiple classifiers and tune model parameters.
+5. Phase 5: Model evaluation and business perspective
+   - Measure precision, recall, F1-score, and confusion matrix.
+6. Phase 6: Model interpretation
+   - Use feature importance to explain which variables influence churn predictions.
+7. Phase 7: Model export and serialization
+   - Save the final trained pipeline and prepare it for deployment.
+
+## How to run the app
+From the project root, install dependencies (if needed):
+
+```bash
+pip install -r requirements.txt
+```
+
+Then start the API server:
+
+```bash
+python app.py
+```
+
+If you want to run it with uvicorn directly:
+
+```bash
+uvicorn app:app --host 0.0.0.0 --port 8000
+```
+
+To test the API, send the sample request:
+
+```bash
+curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d @sample_request.json
+```
+
 ## Notes
 - The assignment PDF is intentionally excluded from Git tracking in [.gitignore](.gitignore).
 - The notebook and app have been updated to use stable, project-root-safe file handling for the dataset and model files.

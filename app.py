@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
@@ -66,3 +67,7 @@ def predict_churn(data: CustomerData):
         "risk_level": risk_level,
         "recommendation": "Retention outreach required" if probability >= 0.5 else "Monitor and continue standard retention"
     }
+
+
+if __name__ == "__main__":
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=False)
