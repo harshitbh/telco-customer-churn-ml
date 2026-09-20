@@ -1,5 +1,7 @@
 # Telco Customer Churn Prediction
 
+GitHub Repository: https://github.com/harshitbh/telco-customer-churn-ml.git
+
 This project predicts whether a telecom customer is likely to churn using historical customer behavior, service usage, and billing data.
 
 The workflow includes data cleaning, EDA, feature engineering, class balancing, model comparison, threshold tuning, and deployment via a FastAPI prediction endpoint.
